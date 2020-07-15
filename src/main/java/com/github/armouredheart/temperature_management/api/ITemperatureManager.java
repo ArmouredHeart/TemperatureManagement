@@ -12,8 +12,6 @@ import net.minecraft.entity.LivingEntity;
 
 public interface ITemperatureManager<T extends LivingEntity> {
     // *** Attributes ***
-    //public static final double MAX_TEMPERATURE_LEVEL = 10.0D;
-    //public static final double MIN_TEMPERATURE_LEVEL = -10.0D;
 
     // *** Methods ***
 
@@ -21,10 +19,30 @@ public interface ITemperatureManager<T extends LivingEntity> {
     public static void computeTemperatureRank() {
         double blockTemp;
         boolean isOnFire;
+        boolean isInWater;
         int heating;
         int cooling;
-        int insulation;
-        int level = blockTemp
+        int totalInsulation = heating - cooling;
+        int level = (int)blockTemp*5; // refine this later
+        int bonus = 0;
+
+        // apply +10 if on fire
+        if(isOnFire) {bonus = bonus + 10;}
+
+        // 
+        if(isInWater) {bonus = bonus - 1;}
+
+        // apply insulation values
+        if(level > 0 && totalInsulation > 0) {
+            // edge case of having heating while in hot environment
+            bonus = bonus + 1;
+        } else if(level < 0 && totalInsulation < 0) {
+            // edge case of having cooling while in cold environment
+            bonus = bonus - 1;
+        } else {
+            // standard condition
+            bonus = bonus + totalInsulation;
+        } 
     }
 
     /** */

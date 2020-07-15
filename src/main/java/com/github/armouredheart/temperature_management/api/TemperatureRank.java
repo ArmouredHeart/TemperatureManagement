@@ -19,10 +19,10 @@ public enum TemperatureRank implements Comparable<TemperatureRank> {
     // Middle ranks
     WARM(1),
     COMFORTABLE(0),
-    CHILLY(-1),
+    COOL(-1),
 
     // Cold 
-    NIPPY(-2),
+    CHILLY(-2),
     COLD(-3),
     FRIGID(-4),
     FREEZING(-5);
